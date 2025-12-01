@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\justi\\OneDrive\\Documents\\VSProjects\\FragranceDiaryBase\\FragranceDiaryBase.Shared\\obj\\Debug\\net10.0\\scopedcss\\projectbundle\\FragranceDiaryBase.Shared.bundle.scp.css",
+      "PackagePath": "staticwebassets\\FragranceDiaryBase.Shared.pnoq7y9g19.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\justi\\OneDrive\\Documents\\VSProjects\\FragranceDiaryBase\\FragranceDiaryBase.Shared\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\justi\\OneDrive\\Documents\\VSProjects\\FragranceDiaryBase\\FragranceDiaryBase.Shared\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\justi\\OneDrive\\Documents\\VSProjects\\FragranceDiaryBase\\FragranceDiaryBase.Shared\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\justi\\OneDrive\\Documents\\VSProjects\\FragranceDiaryBase\\FragranceDiaryBase.Shared\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0\\staticwebassets\\msbuild.FragranceDiaryBase.Shared.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0\\staticwebassets\\msbuild.FragranceDiaryBase.Shared.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0\\staticwebassets\\msbuild.build.FragranceDiaryBase.Shared.props",
+      "PackagePath": "build\\FragranceDiaryBase.Shared.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0\\staticwebassets\\msbuild.buildMultiTargeting.FragranceDiaryBase.Shared.props",
+      "PackagePath": "buildMultiTargeting\\FragranceDiaryBase.Shared.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0\\staticwebassets\\msbuild.buildTransitive.FragranceDiaryBase.Shared.props",
+      "PackagePath": "buildTransitive\\FragranceDiaryBase.Shared.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

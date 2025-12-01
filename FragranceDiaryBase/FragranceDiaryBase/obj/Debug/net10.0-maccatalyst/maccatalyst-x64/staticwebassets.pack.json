@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\justi\\.nuget\\packages\\microsoft.aspnetcore.components.webview\\10.0.0\\staticwebassets\\blazor.modules.json",
+      "PackagePath": "staticwebassets\\_framework\\blazor.modules.json"
+    },
+    {
+      "Id": "C:\\Users\\justi\\.nuget\\packages\\microsoft.aspnetcore.components.webview\\10.0.0\\staticwebassets\\blazor.webview.js",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webview.js"
+    },
+    {
+      "Id": "C:\\Users\\justi\\OneDrive\\Documents\\VSProjects\\FragranceDiaryBase\\FragranceDiaryBase\\obj\\Debug\\net10.0-maccatalyst\\maccatalyst-x64\\scopedcss\\bundle\\FragranceDiaryBase.styles.css",
+      "PackagePath": "staticwebassets\\FragranceDiaryBase.styles.css"
+    },
+    {
+      "Id": "C:\\Users\\justi\\OneDrive\\Documents\\VSProjects\\FragranceDiaryBase\\FragranceDiaryBase\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\justi\\OneDrive\\Documents\\VSProjects\\FragranceDiaryBase\\FragranceDiaryBase\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0-maccatalyst\\maccatalyst-x64\\staticwebassets\\msbuild.FragranceDiaryBase.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0-maccatalyst\\maccatalyst-x64\\staticwebassets\\msbuild.FragranceDiaryBase.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0-maccatalyst\\maccatalyst-x64\\staticwebassets\\msbuild.build.FragranceDiaryBase.props",
+      "PackagePath": "build\\FragranceDiaryBase.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0-maccatalyst\\maccatalyst-x64\\staticwebassets\\msbuild.buildMultiTargeting.FragranceDiaryBase.props",
+      "PackagePath": "buildMultiTargeting\\FragranceDiaryBase.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0-maccatalyst\\maccatalyst-x64\\staticwebassets\\msbuild.buildTransitive.FragranceDiaryBase.props",
+      "PackagePath": "buildTransitive\\FragranceDiaryBase.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
