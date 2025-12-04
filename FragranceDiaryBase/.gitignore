@@ -1,0 +1,15 @@
+# Visual Studio cache
+.vs/
+
+# Build output
+bin/
+obj/
+
+# User-specific VS files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Optional: don't commit uploaded photos if you don't want them in Git
+FragranceDiaryBase.Web/wwwroot/images/perfumes/

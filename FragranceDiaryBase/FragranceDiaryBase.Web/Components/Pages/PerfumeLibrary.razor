@@ -1,0 +1,50 @@
+﻿@page "/library"
+@using FragranceDiaryBase.Shared.Models
+@using Microsoft.EntityFrameworkCore
+@inject FragranceDiaryBase.Shared.Data.FragranceDbContext Db
+
+<h1>Perfume Library</h1>
+
+@if (perfumes is null)
+{
+    <p>Loading...</p>
+}
+else if (!perfumes.Any())
+{
+    <p>No perfumes found yet.</p>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var p in perfumes)
+        {
+            <li class="list-group-item">
+                <strong>@p.Name</strong>
+                <br />
+                @p.Brand?.Name
+                <br />
+                @p.VolumeMl ml (@p.SizeTag)
+                <br />
+                <em>Notes:</em>
+                @string.Join(", ", p.Notes.Select(n => n.Note.Name))
+                <br />
+                <em>Vibes:</em>
+                @string.Join(", ", p.Vibes.Select(v => v.Text))
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private List<Perfume>? perfumes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Straight from the DB, no extra HTTP hop needed for server-side
+        perfumes = await Db.Perfumes
+            .Include(p => p.Brand)
+            .Include(p => p.Notes).ThenInclude(pn => pn.Note)
+            .Include(p => p.Vibes)
+            .ToListAsync();
+    }
+}

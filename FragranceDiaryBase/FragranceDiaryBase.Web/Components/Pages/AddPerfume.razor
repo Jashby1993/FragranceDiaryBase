@@ -1,0 +1,431 @@
+﻿@page "/perfumes/add"
+
+@using System.ComponentModel.DataAnnotations
+@using FragranceDiaryBase.Shared.Models
+@using FragranceDiaryBase.Shared.Data
+@using Microsoft.EntityFrameworkCore
+@inject FragranceDbContext Db
+@inject NavigationManager Nav
+
+<h1>Add Perfume</h1>
+
+<EditForm Model="@Model" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <!-- Name -->
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <InputText class="form-control" @bind-Value="Model.Name" />
+    </div>
+
+    <!-- Brand -->
+    <div class="mb-3">
+        <label class="form-label">Brand</label>
+
+        <select class="form-select" @bind="Model.SelectedBrandId">
+            <option value="0">(Select brand)</option>
+            @foreach (var b in Brands)
+            {
+                <option value="@b.Id">@b.Name</option>
+            }
+            <option value="-1">+ Add new brand...</option>
+        </select>
+
+        @if (Model.SelectedBrandId == -1)
+        {
+            <div class="mt-2">
+                <label class="form-label">New brand name</label>
+                <InputText class="form-control" @bind-Value="Model.NewBrandName" />
+            </div>
+        }
+    </div>
+
+    <!-- Volume -->
+    <div class="mb-3">
+        <label class="form-label">Volume (ml)</label>
+        <InputNumber class="form-control" @bind-Value="Model.VolumeMl" />
+        <div class="form-text">
+            Size tag is calculated automatically from ml.
+        </div>
+    </div>
+
+    <hr />
+
+    <!-- Vibes -->
+    <h3>Vibes</h3>
+    <div class="mb-3 d-flex">
+        <InputText class="form-control me-2" placeholder="e.g. Great date night" @bind-Value="NewVibeText" />
+        <button type="button" class="btn btn-secondary" @onclick="AddVibe">Add vibe</button>
+    </div>
+
+    @if (Vibes.Any())
+    {
+        <ul class="list-group mb-3">
+            @foreach (var vibe in Vibes)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @vibe
+                    <button type="button" class="btn btn-sm btn-outline-danger" @onclick="() => RemoveVibe(vibe)">×</button>
+                </li>
+            }
+        </ul>
+    }
+
+    <hr />
+
+    <!-- Notes: Top / Heart / Base -->
+    <h3>Notes</h3>
+    <p class="form-text">
+        Choose notes for each level. All notes share one master list.
+    </p>
+
+    <!-- Top notes -->
+    <h5>Top notes</h5>
+    <div class="mb-3 d-flex">
+        <select class="form-select me-2" @bind="SelectedTopNoteId">
+            <option value="0">(Select top note)</option>
+            @foreach (var note in Notes)
+            {
+                <option value="@note.Id">@note.Name</option>
+            }
+            <option value="-1">+ Add new note...</option>
+        </select>
+
+        @if (SelectedTopNoteId == -1)
+        {
+            <InputText class="form-control me-2" placeholder="New top note" @bind-Value="NewTopNoteName" />
+        }
+
+        <button type="button" class="btn btn-secondary" @onclick="AddTopNote">Add</button>
+    </div>
+
+    <!-- Heart notes -->
+    <h5>Heart notes</h5>
+    <div class="mb-3 d-flex">
+        <select class="form-select me-2" @bind="SelectedHeartNoteId">
+            <option value="0">(Select heart note)</option>
+            @foreach (var note in Notes)
+            {
+                <option value="@note.Id">@note.Name</option>
+            }
+            <option value="-1">+ Add new note...</option>
+        </select>
+
+        @if (SelectedHeartNoteId == -1)
+        {
+            <InputText class="form-control me-2" placeholder="New heart note" @bind-Value="NewHeartNoteName" />
+        }
+
+        <button type="button" class="btn btn-secondary" @onclick="AddHeartNote">Add</button>
+    </div>
+
+    <!-- Base notes -->
+    <h5>Base notes</h5>
+    <div class="mb-3 d-flex">
+        <select class="form-select me-2" @bind="SelectedBaseNoteId">
+            <option value="0">(Select base note)</option>
+            @foreach (var note in Notes)
+            {
+                <option value="@note.Id">@note.Name</option>
+            }
+            <option value="-1">+ Add new note...</option>
+        </select>
+
+        @if (SelectedBaseNoteId == -1)
+        {
+            <InputText class="form-control me-2" placeholder="New base note" @bind-Value="NewBaseNoteName" />
+        }
+
+        <button type="button" class="btn btn-secondary" @onclick="AddBaseNote">Add</button>
+    </div>
+
+    <!-- Current note list -->
+    @if (NoteRows.Any())
+    {
+        <ul class="list-group mb-3">
+            @foreach (var row in NoteRows)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>
+                        @row.Name
+                        <span class="badge bg-primary ms-2">@row.Type</span>
+                    </span>
+                    <button type="button" class="btn btn-sm btn-outline-danger" @onclick="() => RemoveNote(row)">×</button>
+                </li>
+            }
+        </ul>
+    }
+
+    <hr />
+
+    <button type="submit" class="btn btn-primary" disabled="@IsSaving">
+        @(IsSaving ? "Saving..." : "Save Perfume")
+    </button>
+</EditForm>
+
+@code {
+    // ----- Form model -----
+    public class AddPerfumeModel
+    {
+        [Required]
+        public string Name { get; set; } = string.Empty;
+
+        // 0 = none, >0 = brandId, -1 = "add new brand"
+        public int SelectedBrandId { get; set; } = 0;
+
+        public string? NewBrandName { get; set; }
+
+        [Range(1, 1000, ErrorMessage = "Volume must be at least 1 ml.")]
+        public int VolumeMl { get; set; } = 50;
+    }
+
+    // Note row used by the UI
+    public class NoteRow
+    {
+        public string Name { get; set; } = string.Empty;
+        public NoteType Type { get; set; }
+    }
+
+    private AddPerfumeModel Model { get; set; } = new();
+
+    private List<Brand> Brands { get; set; } = new();
+    private List<Note> Notes { get; set; } = new();
+
+    private List<string> Vibes { get; set; } = new();
+    private string? NewVibeText { get; set; }
+
+    private List<NoteRow> NoteRows { get; set; } = new();
+
+    // Dropdown state for notes
+    private int SelectedTopNoteId { get; set; } = 0;
+    private int SelectedHeartNoteId { get; set; } = 0;
+    private int SelectedBaseNoteId { get; set; } = 0;
+
+    private string? NewTopNoteName { get; set; }
+    private string? NewHeartNoteName { get; set; }
+    private string? NewBaseNoteName { get; set; }
+
+    private bool IsSaving { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Brands = await Db.Brands
+            .OrderBy(b => b.Name)
+            .ToListAsync();
+
+        Notes = await Db.Notes
+            .OrderBy(n => n.Name)
+            .ToListAsync();
+    }
+
+    // ----- Vibes -----
+    private void AddVibe()
+    {
+        if (!string.IsNullOrWhiteSpace(NewVibeText))
+        {
+            var trimmed = NewVibeText.Trim();
+            if (!Vibes.Contains(trimmed, StringComparer.OrdinalIgnoreCase))
+            {
+                Vibes.Add(trimmed);
+            }
+            NewVibeText = string.Empty;
+        }
+    }
+
+    private void RemoveVibe(string vibe)
+    {
+        Vibes.Remove(vibe);
+    }
+
+    // ----- Notes -----
+
+    private string? ResolveNoteName(int selectedId, string? newName)
+    {
+        if (selectedId > 0)
+        {
+            var note = Notes.FirstOrDefault(n => n.Id == selectedId);
+            return note?.Name;
+        }
+
+        if (selectedId == -1)
+        {
+            return string.IsNullOrWhiteSpace(newName) ? null : newName.Trim();
+        }
+
+        return null;
+    }
+
+    private void AddNoteRow(string? name, NoteType type)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return;
+        }
+
+        var trimmed = name.Trim();
+
+        if (!NoteRows.Any(n =>
+                n.Name.Equals(trimmed, StringComparison.OrdinalIgnoreCase) &&
+                n.Type == type))
+        {
+            NoteRows.Add(new NoteRow
+            {
+                Name = trimmed,
+                Type = type
+            });
+        }
+    }
+
+    private void AddTopNote()
+    {
+        var name = ResolveNoteName(SelectedTopNoteId, NewTopNoteName);
+        AddNoteRow(name, NoteType.Top);
+
+        SelectedTopNoteId = 0;
+        NewTopNoteName = string.Empty;
+    }
+
+    private void AddHeartNote()
+    {
+        var name = ResolveNoteName(SelectedHeartNoteId, NewHeartNoteName);
+        AddNoteRow(name, NoteType.Heart);
+
+        SelectedHeartNoteId = 0;
+        NewHeartNoteName = string.Empty;
+    }
+
+    private void AddBaseNote()
+    {
+        var name = ResolveNoteName(SelectedBaseNoteId, NewBaseNoteName);
+        AddNoteRow(name, NoteType.Base);
+
+        SelectedBaseNoteId = 0;
+        NewBaseNoteName = string.Empty;
+    }
+
+    private void RemoveNote(NoteRow row)
+    {
+        NoteRows.Remove(row);
+    }
+
+    // ----- Save -----
+    private async Task HandleValidSubmit()
+    {
+        IsSaving = true;
+
+        try
+        {
+            // Resolve or create brand
+            Brand brand;
+
+            if (Model.SelectedBrandId == -1)
+            {
+                if (string.IsNullOrWhiteSpace(Model.NewBrandName))
+                {
+                    throw new InvalidOperationException("Please enter a new brand name.");
+                }
+
+                var newBrandName = Model.NewBrandName.Trim();
+
+                brand = await Db.Brands
+                    .FirstOrDefaultAsync(b => b.Name == newBrandName)
+                    ?? new Brand { Name = newBrandName };
+
+                if (brand.Id == 0)
+                {
+                    Db.Brands.Add(brand);
+                    await Db.SaveChangesAsync();
+                }
+            }
+            else if (Model.SelectedBrandId > 0)
+            {
+                brand = await Db.Brands.FindAsync(Model.SelectedBrandId)
+                        ?? throw new InvalidOperationException("Selected brand not found.");
+            }
+            else
+            {
+                throw new InvalidOperationException("Please select a brand or choose 'Add new brand...'.");
+            }
+
+            // Create perfume
+            var perfume = new Perfume
+            {
+                Name = Model.Name.Trim(),
+                BrandId = brand.Id,
+                VolumeMl = Model.VolumeMl,
+                PhotoPath = null,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            };
+
+            Db.Perfumes.Add(perfume);
+            await Db.SaveChangesAsync(); // get Id
+
+            // If they typed a vibe but didn't click "Add vibe", include it
+            if (!string.IsNullOrWhiteSpace(NewVibeText))
+            {
+                AddVibe();
+            }
+
+            // Handle notes
+            if (NoteRows.Any())
+            {
+                var distinctNames = NoteRows
+                    .Select(n => n.Name)
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToList();
+
+                var existingNotes = await Db.Notes
+                    .Where(n => distinctNames.Contains(n.Name))
+                    .ToListAsync();
+
+                foreach (var row in NoteRows)
+                {
+                    var note = existingNotes
+                        .FirstOrDefault(n => n.Name.Equals(row.Name, StringComparison.OrdinalIgnoreCase));
+
+                    if (note is null)
+                    {
+                        note = new Note { Name = row.Name };
+                        Db.Notes.Add(note);
+                        existingNotes.Add(note);
+                        await Db.SaveChangesAsync();
+                    }
+
+                    Db.PerfumeNotes.Add(new PerfumeNote
+                    {
+                        PerfumeId = perfume.Id,
+                        NoteId = note.Id,
+                        NoteType = row.Type
+                    });
+                }
+            }
+
+            // Handle vibes
+            foreach (var vibe in Vibes)
+            {
+                Db.VibeTags.Add(new VibeTag
+                {
+                    PerfumeId = perfume.Id,
+                    Text = vibe
+                });
+            }
+
+            await Db.SaveChangesAsync();
+
+            // Go back to library
+            Nav.NavigateTo("/library");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            // Optional: add a visible error message on the page.
+        }
+        finally
+        {
+            IsSaving = false;
+        }
+    }
+}
+

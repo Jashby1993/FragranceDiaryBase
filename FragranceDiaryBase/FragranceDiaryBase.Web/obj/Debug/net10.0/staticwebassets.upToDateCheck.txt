@@ -1,6 +1,8 @@
+wwwroot\images\perfumes\a42e7be7-76e8-48cd-a830-093665614d53.jpg
+wwwroot\images\perfumes\ec1c6ff4-3df0-46bc-8d7b-ca386439d9b3.jpg
 Components\Layout\ReconnectModal.razor.js
-C:\Users\justi\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.0\build\..\_framework\blazor.web.js
-C:\Users\justi\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.0\build\..\_framework\blazor.server.js
-C:\Users\justi\OneDrive\Documents\VSProjects\FragranceDiaryBase\FragranceDiaryBase.Web\Components\Layout\ReconnectModal.razor.js
-C:\Users\justi\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.0\_framework\blazor.web.js
-C:\Users\justi\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.0\_framework\blazor.server.js
+C:\Users\jashb\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.0\build\..\_framework\blazor.web.js
+C:\Users\jashb\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.0\build\..\_framework\blazor.server.js
+C:\Users\jashb\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.0\_framework\blazor.server.js
+C:\Users\jashb\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.0\_framework\blazor.web.js
+C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiaryBase.Web\Components\Layout\ReconnectModal.razor.js

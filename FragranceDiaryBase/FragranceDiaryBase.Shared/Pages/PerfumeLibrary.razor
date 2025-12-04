@@ -1,0 +1,94 @@
+﻿@page "/library"
+
+@using FragranceDiaryBase.Shared.Data
+@using FragranceDiaryBase.Shared.Models
+@using Microsoft.EntityFrameworkCore
+
+@inject FragranceDbContext Db
+
+<h1>Perfume Library</h1>
+
+@if (Perfumes is null)
+{
+    <p>Loading...</p>
+}
+else if (!Perfumes.Any())
+{
+    <p>No perfumes in your library yet. Try adding one!</p>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var p in Perfumes)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    @if (!string.IsNullOrEmpty(p.PhotoPath))
+                    {
+                        <img class="card-img-top"
+                             src="@p.PhotoPath"
+                             alt="@p.Name"
+                             style="object-fit: cover; max-height: 220px;" />
+                    }
+
+                    <div class="card-body">
+                        <h5 class="card-title">@p.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@p.Brand?.Name</h6>
+
+                        <p class="mb-1">
+                            <strong>Volume:</strong> @p.VolumeMl ml (@p.SizeTag)
+                        </p>
+
+                        @if (p.Notes is not null && p.Notes.Any())
+                        {
+                            <p class="mb-1">
+                                <strong>Top:</strong>
+                                @string.Join(", ",
+                                p.Notes
+                                .Where(n => n.NoteType == NoteType.Top)
+                                .Select(n => n.Note?.Name))
+                </p>
+                <p class="mb-1">
+                    <strong>Heart:</strong>
+                    @string.Join(", ",
+                                        p.Notes
+                                        .Where(n => n.NoteType == NoteType.Heart)
+                                        .Select(n => n.Note?.Name))
+                </p>
+                <p class="mb-1">
+                    <strong>Base:</strong>
+                    @string.Join(", ",
+                                        p.Notes
+                                        .Where(n => n.NoteType == NoteType.Base)
+                                        .Select(n => n.Note?.Name))
+                </p>
+                                }
+
+                        @if (p.Vibes is not null && p.Vibes.Any())
+                        {
+                            <p class="mt-2 mb-0">
+                                <strong>Vibes:</strong>
+                                @string.Join(" · ", p.Vibes.Select(v => v.Text))
+                            </p>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<Perfume>? Perfumes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Perfumes = await Db.Perfumes
+            .Include(p => p.Brand)
+            .Include(p => p.Notes).ThenInclude(pn => pn.Note)
+            .Include(p => p.Vibes)
+            .OrderBy(p => p.Brand!.Name)
+            .ThenBy(p => p.Name)
+            .ToListAsync();
+    }
+}

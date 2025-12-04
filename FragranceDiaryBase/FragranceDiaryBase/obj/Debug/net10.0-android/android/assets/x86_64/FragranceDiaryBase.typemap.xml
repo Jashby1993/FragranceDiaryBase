@@ -1,4 +1,4 @@
-<api type="debug" assembly-name="FragranceDiaryBase" mvid="a6b89a65599f4c3e99989b5c2794c49c">
+<api type="debug" assembly-name="FragranceDiaryBase" mvid="83d4f2fe9e864666b1f8c10334216e68">
   <java-to-managed>
     <entry java-name="crc64c3952eeefc031ba9/MainActivity" managed-name="FragranceDiaryBase.MainActivity, FragranceDiaryBase" managed-type-token-id="33554440" />
     <entry java-name="crc64c3952eeefc031ba9/MainApplication" managed-name="FragranceDiaryBase.MainApplication, FragranceDiaryBase" managed-type-token-id="33554441" />
