@@ -1,9 +1,13 @@
 ﻿@page "/perfumes/edit/{Id:int}"
 
 @using System.ComponentModel.DataAnnotations
+@using System.IO
+@using System.Linq
 @using FragranceDiaryBase.Shared.Models
 @using FragranceDiaryBase.Shared.Data
 @using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.Forms
+
 @inject FragranceDbContext Db
 @inject NavigationManager Nav
 
@@ -60,12 +64,56 @@ else
             </div>
         </div>
 
+        <!-- Gender profile -->
+        <div class="mb-3">
+            <label class="form-label">Gender profile</label>
+            <InputSelect class="form-select" @bind-Value="Model.GenderProfile">
+                @foreach (GenderProfile gp in Enum.GetValues(typeof(GenderProfile)))
+                {
+                    <option value="@gp">@GetGenderDisplay(gp)</option>
+                }
+            </InputSelect>
+        </div>
+
+        <hr />
+
+        <!-- Photo -->
+        <h3>Photo</h3>
+        <div class="mb-3">
+            @if (!string.IsNullOrEmpty(CurrentPhotoPath))
+            {
+                <div class="mb-2">
+                    <label class="form-label">Current photo</label>
+                    <div>
+                        <img src="@CurrentPhotoPath"
+                             alt="Current perfume photo"
+                             style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 8px;" />
+                    </div>
+                </div>
+            }
+
+            <label class="form-label">Change photo (optional)</label>
+            <InputFile OnChange="OnFileSelected" accept="image/*" />
+
+            @if (!string.IsNullOrEmpty(UploadedPhotoPath) && UploadedPhotoPath != CurrentPhotoPath)
+            {
+                <div class="mt-2">
+                    <small class="text-muted">New photo preview:</small>
+                    <img src="@UploadedPhotoPath"
+                         alt="New perfume photo preview"
+                         style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 8px;" />
+                </div>
+            }
+        </div>
+
         <hr />
 
         <!-- Vibes -->
         <h3>Vibes</h3>
         <div class="mb-3 d-flex">
-            <InputText class="form-control me-2" placeholder="e.g. Great date night" @bind-Value="NewVibeText" />
+            <InputText class="form-control me-2"
+                       placeholder="e.g. Great date night"
+                       @bind-Value="NewVibeText" />
             <button type="button" class="btn btn-secondary" @onclick="AddVibe">Add vibe</button>
         </div>
 
@@ -76,7 +124,11 @@ else
                 {
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         @vibe
-                        <button type="button" class="btn btn-sm btn-outline-danger" @onclick="@(() => RemoveVibe(vibe))">×</button>
+                        <button type="button"
+                                class="btn btn-sm btn-outline-danger"
+                                @onclick="@(() => RemoveVibe(vibe))">
+                            ×
+                        </button>
                     </li>
                 }
             </ul>
@@ -104,7 +156,9 @@ else
 
             @if (SelectedTopNoteId == -1)
             {
-                <InputText class="form-control me-2" placeholder="New top note" @bind-Value="NewTopNoteName" />
+                <InputText class="form-control me-2"
+                           placeholder="New top note"
+                           @bind-Value="NewTopNoteName" />
             }
 
             <button type="button" class="btn btn-secondary" @onclick="AddTopNote">Add</button>
@@ -124,7 +178,9 @@ else
 
             @if (SelectedHeartNoteId == -1)
             {
-                <InputText class="form-control me-2" placeholder="New heart note" @bind-Value="NewHeartNoteName" />
+                <InputText class="form-control me-2"
+                           placeholder="New heart note"
+                           @bind-Value="NewHeartNoteName" />
             }
 
             <button type="button" class="btn btn-secondary" @onclick="AddHeartNote">Add</button>
@@ -144,7 +200,9 @@ else
 
             @if (SelectedBaseNoteId == -1)
             {
-                <InputText class="form-control me-2" placeholder="New base note" @bind-Value="NewBaseNoteName" />
+                <InputText class="form-control me-2"
+                           placeholder="New base note"
+                           @bind-Value="NewBaseNoteName" />
             }
 
             <button type="button" class="btn btn-secondary" @onclick="AddBaseNote">Add</button>
@@ -161,7 +219,11 @@ else
                             @row.Name
                             <span class="badge bg-primary ms-2">@row.Type</span>
                         </span>
-                        <button type="button" class="btn btn-sm btn-outline-danger" @onclick="@(() => RemoveNote(row))">×</button>
+                        <button type="button"
+                                class="btn btn-sm btn-outline-danger"
+                                @onclick="@(() => RemoveNote(row))">
+                            ×
+                        </button>
                     </li>
                 }
             </ul>
@@ -192,6 +254,9 @@ else
 
         [Range(1, 1000, ErrorMessage = "Volume must be at least 1 ml.")]
         public int VolumeMl { get; set; }
+
+        [Required]
+        public GenderProfile GenderProfile { get; set; } = GenderProfile.PerfectUnisex;
     }
 
     public class NoteRow
@@ -218,6 +283,11 @@ else
     private string? NewTopNoteName { get; set; }
     private string? NewHeartNoteName { get; set; }
     private string? NewBaseNoteName { get; set; }
+
+    // photo
+    private IBrowserFile? UploadedFile;
+    private string? CurrentPhotoPath;
+    private string? UploadedPhotoPath;
 
     private bool IsSaving { get; set; }
     private bool IsLoaded { get; set; }
@@ -250,8 +320,12 @@ else
         {
             Name = PerfumeEntity.Name,
             VolumeMl = PerfumeEntity.VolumeMl,
-            SelectedBrandId = PerfumeEntity.BrandId
+            SelectedBrandId = PerfumeEntity.BrandId,
+            GenderProfile = PerfumeEntity.GenderProfile
         };
+
+        CurrentPhotoPath = PerfumeEntity.PhotoPath;
+        UploadedPhotoPath = CurrentPhotoPath;
 
         Vibes = PerfumeEntity.Vibes
             .Select(v => v.Text)
@@ -273,7 +347,47 @@ else
         Nav.NavigateTo("/library");
     }
 
-    // Vibes
+    // Display text for GenderProfile dropdown
+    private string GetGenderDisplay(GenderProfile gp) => gp switch
+    {
+        GenderProfile.FeminineLeaning => "Feminine leaning",
+        GenderProfile.MasculineLeaning => "Masculine leaning",
+        GenderProfile.PerfectUnisex => "Perfect unisex",
+        _ => gp.ToString()
+    };
+
+    // ----- Photo upload -----
+    private async Task OnFileSelected(InputFileChangeEventArgs e)
+    {
+        UploadedFile = e.File;
+
+        if (UploadedFile is null)
+        {
+            UploadedPhotoPath = CurrentPhotoPath;
+            return;
+        }
+
+        var contentRoot = Directory.GetCurrentDirectory();
+        var uploadsFolder = Path.Combine(contentRoot, "wwwroot", "images", "perfumes");
+        Directory.CreateDirectory(uploadsFolder);
+
+        var ext = Path.GetExtension(UploadedFile.Name);
+        if (string.IsNullOrWhiteSpace(ext))
+        {
+            ext = ".jpg";
+        }
+
+        var fileName = $"{Guid.NewGuid()}{ext}";
+        var filePath = Path.Combine(uploadsFolder, fileName);
+
+        await using var readStream = UploadedFile.OpenReadStream(10 * 1024 * 1024);
+        await using var fileStream = File.Create(filePath);
+        await readStream.CopyToAsync(fileStream);
+
+        UploadedPhotoPath = $"/images/perfumes/{fileName}";
+    }
+
+    // ----- Vibes -----
     private void AddVibe()
     {
         if (!string.IsNullOrWhiteSpace(NewVibeText))
@@ -401,7 +515,13 @@ else
             PerfumeEntity.Name = Model.Name.Trim();
             PerfumeEntity.BrandId = brand.Id;
             PerfumeEntity.VolumeMl = Model.VolumeMl;
+            PerfumeEntity.GenderProfile = Model.GenderProfile;
             PerfumeEntity.UpdatedAt = DateTime.UtcNow;
+
+            if (!string.IsNullOrWhiteSpace(UploadedPhotoPath))
+            {
+                PerfumeEntity.PhotoPath = UploadedPhotoPath;
+            }
 
             if (!string.IsNullOrWhiteSpace(NewVibeText))
             {
@@ -476,4 +596,5 @@ else
         }
     }
 }
+
 

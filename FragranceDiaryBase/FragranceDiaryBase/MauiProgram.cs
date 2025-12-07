@@ -1,6 +1,8 @@
 ﻿using FragranceDiaryBase.Services;
 using FragranceDiaryBase.Shared.Services;
 using Microsoft.Extensions.Logging;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Microsoft.Maui;
 
 namespace FragranceDiaryBase
 {

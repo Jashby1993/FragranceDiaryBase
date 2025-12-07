@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MXNT7gdL2i8=",
+  "dgSpecHash": "TJ1+eCcDpus=",
   "success": true,
-  "projectFilePath": "C:\\Users\\jashb\\source\\repos\\FragranceDiaryBase\\FragranceDiaryBase\\FragranceDiaryBase\\FragranceDiaryBase.csproj",
+  "projectFilePath": "C:\\Users\\jashb\\source\\repos\\FragranceDiaryBase\\FragranceDiaryBase\\FragranceDiaryBase\\FragranceDiaryBase.App.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jashb\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\jashb\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",
@@ -73,6 +73,8 @@
     "C:\\Users\\jashb\\.nuget\\packages\\microsoft.web.webview2\\1.0.3179.45\\microsoft.web.webview2.1.0.3179.45.nupkg.sha512",
     "C:\\Users\\jashb\\.nuget\\packages\\microsoft.windows.sdk.buildtools\\10.0.22621.756\\microsoft.windows.sdk.buildtools.10.0.22621.756.nupkg.sha512",
     "C:\\Users\\jashb\\.nuget\\packages\\microsoft.windowsappsdk\\1.7.250909003\\microsoft.windowsappsdk.1.7.250909003.nupkg.sha512",
+    "C:\\Users\\jashb\\.nuget\\packages\\npgsql\\10.0.0\\npgsql.10.0.0.nupkg.sha512",
+    "C:\\Users\\jashb\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\10.0.0\\npgsql.entityframeworkcore.postgresql.10.0.0.nupkg.sha512",
     "C:\\Users\\jashb\\.nuget\\packages\\system.clientmodel\\1.5.1\\system.clientmodel.1.5.1.nupkg.sha512",
     "C:\\Users\\jashb\\.nuget\\packages\\system.configuration.configurationmanager\\9.0.4\\system.configuration.configurationmanager.9.0.4.nupkg.sha512",
     "C:\\Users\\jashb\\.nuget\\packages\\system.diagnostics.eventlog\\9.0.4\\system.diagnostics.eventlog.9.0.4.nupkg.sha512",

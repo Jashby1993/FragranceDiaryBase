@@ -1768,12 +1768,12 @@ com.bumptech.glide.util.pool.FactoryPools$Poolable;com.bumptech.glide.util.pool.
 Bumptech.Glide.Util.Pool.FactoryPools+IResetter, Xamarin.Android.Glide;com.bumptech.glide.util.pool.FactoryPools$Resetter
 Bumptech.Glide.Util.Pool.FactoryPools.IResetter;com.bumptech.glide.util.pool.FactoryPools$Resetter
 com.bumptech.glide.util.pool.FactoryPools$Resetter;com.bumptech.glide.util.pool.FactoryPools$Resetter
-FragranceDiaryBase.MainActivity, FragranceDiaryBase;crc64c3952eeefc031ba9.MainActivity
-FragranceDiaryBase.MainActivity;crc64c3952eeefc031ba9.MainActivity
-fragrancediarybase.MainActivity;crc64c3952eeefc031ba9.MainActivity
-FragranceDiaryBase.MainApplication, FragranceDiaryBase;crc64c3952eeefc031ba9.MainApplication
-FragranceDiaryBase.MainApplication;crc64c3952eeefc031ba9.MainApplication
-fragrancediarybase.MainApplication;crc64c3952eeefc031ba9.MainApplication
+FragranceDiaryBase.MainActivity, FragranceDiaryBase.App;crc643e50cdda042a798a.MainActivity
+FragranceDiaryBase.MainActivity;crc643e50cdda042a798a.MainActivity
+fragrancediarybase.MainActivity;crc643e50cdda042a798a.MainActivity
+FragranceDiaryBase.MainApplication, FragranceDiaryBase.App;crc643e50cdda042a798a.MainApplication
+FragranceDiaryBase.MainApplication;crc643e50cdda042a798a.MainApplication
+fragrancediarybase.MainApplication;crc643e50cdda042a798a.MainApplication
 Google.Android.Material.Animation.IAnimatableView, Xamarin.Google.Android.Material;com.google.android.material.animation.AnimatableView
 Google.Android.Material.Animation.IAnimatableView;com.google.android.material.animation.AnimatableView
 com.google.android.material.animation.AnimatableView;com.google.android.material.animation.AnimatableView

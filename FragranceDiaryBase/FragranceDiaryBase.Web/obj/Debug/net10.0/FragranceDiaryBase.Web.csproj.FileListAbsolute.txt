@@ -450,3 +450,5 @@ C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiary
 C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiaryBase.Web\obj\Debug\net10.0\FragranceDiaryBase.Web.pdb
 C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiaryBase.Web\obj\Debug\net10.0\FragranceDiaryBase.Web.genruntimeconfig.cache
 C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiaryBase.Web\obj\Debug\net10.0\ref\FragranceDiaryBase.Web.dll
+C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiaryBase.Web\bin\Debug\net10.0\Npgsql.dll
+C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiaryBase.Web\bin\Debug\net10.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll

@@ -18,7 +18,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FragranceDiaryBase")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+a824586c11c68e67ebbffbf6a9b5b956605c2ae5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+20d9b1b6bbdc0cf38829629815fdf0d6b73054e2")]
 [assembly: System.Reflection.AssemblyProductAttribute("FragranceDiaryBase")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FragranceDiaryBase")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,5 +1,7 @@
 <Solution>
   <Project Path="FragranceDiaryBase.Shared/FragranceDiaryBase.Shared.csproj" />
   <Project Path="FragranceDiaryBase.Web/FragranceDiaryBase.Web.csproj" />
-  <Project Path="FragranceDiaryBase/FragranceDiaryBase.csproj" />
+  <Project Path="FragranceDiaryBase/FragranceDiaryBase.App.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
 </Solution>

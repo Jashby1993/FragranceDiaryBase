@@ -1,8 +1,8 @@
 ﻿@page "/perfumes/add"
 
 @using System.ComponentModel.DataAnnotations
-@using System.Linq
 @using System.IO
+@using System.Linq
 @using FragranceDiaryBase.Shared.Models
 @using FragranceDiaryBase.Shared.Data
 @using Microsoft.EntityFrameworkCore
@@ -54,6 +54,17 @@
         </div>
     </div>
 
+    <!-- Gender profile -->
+    <div class="mb-3">
+        <label class="form-label">Gender profile</label>
+        <InputSelect class="form-select" @bind-Value="Model.GenderProfile">
+            @foreach (GenderProfile gp in Enum.GetValues(typeof(GenderProfile)))
+            {
+                <option value="@gp">@GetGenderDisplay(gp)</option>
+            }
+        </InputSelect>
+    </div>
+
     <hr />
 
     <!-- Photo -->
@@ -76,7 +87,9 @@
     <!-- Vibes -->
     <h3>Vibes</h3>
     <div class="mb-3 d-flex">
-        <InputText class="form-control me-2" placeholder="e.g. Great date night" @bind-Value="NewVibeText" />
+        <InputText class="form-control me-2"
+                   placeholder="e.g. Great date night"
+                   @bind-Value="NewVibeText" />
         <button type="button" class="btn btn-secondary" @onclick="AddVibe">Add vibe</button>
     </div>
 
@@ -87,7 +100,11 @@
             {
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     @vibe
-                    <button type="button" class="btn btn-sm btn-outline-danger" @onclick="@(() => RemoveVibe(vibe))">×</button>
+                    <button type="button"
+                            class="btn btn-sm btn-outline-danger"
+                            @onclick="@(() => RemoveVibe(vibe))">
+                        ×
+                    </button>
                 </li>
             }
         </ul>
@@ -115,7 +132,9 @@
 
         @if (SelectedTopNoteId == -1)
         {
-            <InputText class="form-control me-2" placeholder="New top note" @bind-Value="NewTopNoteName" />
+            <InputText class="form-control me-2"
+                       placeholder="New top note"
+                       @bind-Value="NewTopNoteName" />
         }
 
         <button type="button" class="btn btn-secondary" @onclick="AddTopNote">Add</button>
@@ -135,7 +154,9 @@
 
         @if (SelectedHeartNoteId == -1)
         {
-            <InputText class="form-control me-2" placeholder="New heart note" @bind-Value="NewHeartNoteName" />
+            <InputText class="form-control me-2"
+                       placeholder="New heart note"
+                       @bind-Value="NewHeartNoteName" />
         }
 
         <button type="button" class="btn btn-secondary" @onclick="AddHeartNote">Add</button>
@@ -155,7 +176,9 @@
 
         @if (SelectedBaseNoteId == -1)
         {
-            <InputText class="form-control me-2" placeholder="New base note" @bind-Value="NewBaseNoteName" />
+            <InputText class="form-control me-2"
+                       placeholder="New base note"
+                       @bind-Value="NewBaseNoteName" />
         }
 
         <button type="button" class="btn btn-secondary" @onclick="AddBaseNote">Add</button>
@@ -172,7 +195,11 @@
                         @row.Name
                         <span class="badge bg-primary ms-2">@row.Type</span>
                     </span>
-                    <button type="button" class="btn btn-sm btn-outline-danger" @onclick="@(() => RemoveNote(row))">×</button>
+                    <button type="button"
+                            class="btn btn-sm btn-outline-danger"
+                            @onclick="@(() => RemoveNote(row))">
+                        ×
+                    </button>
                 </li>
             }
         </ul>
@@ -199,6 +226,9 @@
 
         [Range(1, 1000, ErrorMessage = "Volume must be at least 1 ml.")]
         public int VolumeMl { get; set; } = 50;
+
+        [Required]
+        public GenderProfile GenderProfile { get; set; } = GenderProfile.PerfectUnisex;
     }
 
     public class NoteRow
@@ -241,6 +271,15 @@
             .OrderBy(n => n.Name)
             .ToListAsync();
     }
+
+    // Display text for GenderProfile dropdown
+    private string GetGenderDisplay(GenderProfile gp) => gp switch
+    {
+        GenderProfile.FeminineLeaning => "Feminine leaning",
+        GenderProfile.MasculineLeaning => "Masculine leaning",
+        GenderProfile.PerfectUnisex => "Perfect unisex",
+        _ => gp.ToString()
+    };
 
     // ----- Photo upload -----
     private async Task OnFileSelected(InputFileChangeEventArgs e)
@@ -405,6 +444,7 @@
                 Name = Model.Name.Trim(),
                 BrandId = brand.Id,
                 VolumeMl = Model.VolumeMl,
+                GenderProfile = Model.GenderProfile,
                 PhotoPath = UploadedPhotoPath, // null if none
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow

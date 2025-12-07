@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace FragranceDiaryBase.Shared.Models;
@@ -31,6 +32,9 @@ public class Perfume
     public List<PerfumeNote> Notes { get; set; } = new();
 
     public List<VibeTag> Vibes { get; set; } = new();
+
+    [Required]
+    public GenderProfile GenderProfile { get; set; } = GenderProfile.PerfectUnisex;
 
     /// <summary>
     /// Path or URL to the perfume photo.

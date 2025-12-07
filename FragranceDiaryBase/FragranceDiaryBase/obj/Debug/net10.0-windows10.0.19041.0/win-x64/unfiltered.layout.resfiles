@@ -70,7 +70,7 @@ splashSplashScreen.scale-125.png
 splashSplashScreen.scale-150.png
 splashSplashScreen.scale-200.png
 splashSplashScreen.scale-400.png
-wwwroot\FragranceDiaryBase.styles.css
+wwwroot\FragranceDiaryBase.App.styles.css
 AboutAssets.txt
 wwwroot\app.css
 wwwroot\index.html

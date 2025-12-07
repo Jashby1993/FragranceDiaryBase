@@ -3,6 +3,7 @@ using FragranceDiaryBase.Web.Components;
 using FragranceDiaryBase.Web.Services;
 using FragranceDiaryBase.Shared.Data;
 using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 
 var builder = WebApplication.CreateBuilder(args);

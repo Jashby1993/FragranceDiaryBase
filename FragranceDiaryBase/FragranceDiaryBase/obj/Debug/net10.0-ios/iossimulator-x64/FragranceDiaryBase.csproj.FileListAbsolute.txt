@@ -774,7 +774,6 @@ C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiary
 C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiaryBase\bin\Debug\net10.0-ios\iossimulator-x64\libxamarin-dotnet.dylib
 C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiaryBase\bin\Debug\net10.0-ios\iossimulator-x64\FragranceDiaryBase.Shared.dll
 C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiaryBase\bin\Debug\net10.0-ios\iossimulator-x64\FragranceDiaryBase.Shared.pdb
-C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiaryBase\obj\Debug\net10.0-ios\iossimulator-x64\build-signature\signature
 C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiaryBase\obj\Debug\net10.0-ios\iossimulator-x64\EmbeddedAttribute.cs
 C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiaryBase\obj\Debug\net10.0-ios\iossimulator-x64\ValidatableTypeAttribute.cs
 C:\Users\jashb\source\repos\FragranceDiaryBase\FragranceDiaryBase\FragranceDiaryBase\obj\Debug\net10.0-ios\iossimulator-x64\FragranceDiaryBase.csproj.AssemblyReference.cache

@@ -1,3 +1,4 @@
+wwwroot\images\perfumes\2485f72b-f374-40a6-b632-8b0f6b104935.jpg
 wwwroot\images\perfumes\a42e7be7-76e8-48cd-a830-093665614d53.jpg
 wwwroot\images\perfumes\ec1c6ff4-3df0-46bc-8d7b-ca386439d9b3.jpg
 Components\Layout\ReconnectModal.razor.js

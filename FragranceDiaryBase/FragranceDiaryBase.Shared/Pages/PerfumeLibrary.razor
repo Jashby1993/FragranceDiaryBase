@@ -1,5 +1,7 @@
 ﻿@page "/library"
 
+@using System.ComponentModel.DataAnnotations
+@using System.Reflection
 @using FragranceDiaryBase.Shared.Data
 @using FragranceDiaryBase.Shared.Models
 @using Microsoft.EntityFrameworkCore
@@ -37,6 +39,10 @@ else
 
                         <p class="mb-1">
                             <strong>Volume:</strong> @p.VolumeMl ml (@p.SizeTag)
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Gender profile:</strong> @GetGenderProfileLabel(p.GenderProfile)
                         </p>
 
                         @if (p.Notes is not null && p.Notes.Any())
@@ -91,4 +97,12 @@ else
             .ThenBy(p => p.Name)
             .ToListAsync();
     }
+
+    private static string GetGenderProfileLabel(GenderProfile profile)
+    {
+        var member = typeof(GenderProfile).GetMember(profile.ToString()).FirstOrDefault();
+        var display = member?.GetCustomAttribute<DisplayAttribute>();
+        return display?.Name ?? profile.ToString();
+    }
 }
+
